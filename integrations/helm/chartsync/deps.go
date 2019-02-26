@@ -14,6 +14,8 @@ func updateDependencies(chartDir, helmhome string) error {
 	// sanity check: does the chart directory exist
 	chartInfo, err := os.Stat(chartDir)
 	switch {
+	case os.IsNotExist(err):
+		return fmt.Errorf("chart path %s does not exist", chartDir)
 	case err != nil:
 		return err
 	case !chartInfo.IsDir():
